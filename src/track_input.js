@@ -16,6 +16,7 @@ switch (choice) {
     case 1: // Expense
         break
     case 2: // Settings
+        await handleSettings()
         break
 }
 
@@ -81,6 +82,70 @@ async function handleIncome() {
 
     // TODO: save to tracker.json
     console.log(`Income saved: ${amount} on ${date}`)
+}
+
+// Handle Settings
+async function handleSettings() {
+    // TODO: load current values from tracker.json
+    const current = {
+        name: "Master profesional",
+        targetAmount: 20000.00,
+        monthlySavings: 400.00
+    }
+
+    const menu = new Alert()
+    menu.title = "⚙️ Settings"
+    menu.addAction(`Goal name: ${current.name}`)
+    menu.addAction(`Target amount: ${current.targetAmount.toFixed(2)} €`)
+    menu.addAction(`Monthly savings target: ${current.monthlySavings.toFixed(2)} €`)
+    menu.addCancelAction("Cancel")
+
+    const choice = await menu.presentAlert()
+    if (choice === -1) return
+
+    if (choice === 0) {
+        const nameAlert = new Alert()
+        nameAlert.title = "Goal name"
+        nameAlert.addTextField("Name", current.name)
+        nameAlert.addAction("Save")
+        nameAlert.addCancelAction("Cancel")
+
+        const confirmed = await nameAlert.presentAlert()
+        if (confirmed === -1) return
+
+        current.name = nameAlert.textFieldValue(0)
+    }
+
+    if (choice === 1) {
+        const amountAlert = new Alert()
+        amountAlert.title = "Target amount"
+        amountAlert.addTextField("Amount", current.targetAmount.toFixed(2))
+        amountAlert.addAction("Save")
+        amountAlert.addCancelAction("Cancel")
+
+        const confirmed = await amountAlert.presentAlert()
+        if (confirmed === -1) return
+
+        const value = parseFloat(amountAlert.textFieldValue(0))
+        if (!isNaN(value) && value > 0) current.targetAmount = value
+    }
+
+    if (choice === 2) {
+        const savingsAlert = new Alert()
+        savingsAlert.title = "Monthly savings target"
+        savingsAlert.addTextField("Amount", current.monthlySavings.toFixed(2))
+        savingsAlert.addAction("Save")
+        savingsAlert.addCancelAction("Cancel")
+
+        const confirmed = await savingsAlert.presentAlert()
+        if (confirmed === -1) return
+
+        const value = parseFloat(savingsAlert.textFieldValue(0))
+        if (!isNaN(value) && value > 0) current.monthlySavings = value
+    }
+
+    // TODO: save updated values to tracker.json
+    console.log(`Settings saved: ${JSON.stringify(current)}`)
 }
 
 // --- Helpers ---
