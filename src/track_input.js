@@ -10,22 +10,23 @@ alert.addCancelAction("Cancel")
 const choice = await alert.presentSheet()
 
 switch (choice) {
-    case 0: //Income
+    case 0: // Income
        await handleIncome()
-       break     
-    case 1: //Expense
+       break
+    case 1: // Expense
         break
-    case 2: //Settings
+    case 2: // Settings
         break
 }
 
 // Handle Income
 async function handleIncome() {
+    // Step 1: amount
     const amountAlert = new Alert()
     amountAlert.title = "💰 Income"
-    amountAlert.message = "Enter the amount you earned"
+    amountAlert.message = "How much did you earn?"
 
-    amountAlert.addTextField("Amount", "0.00", "decimalPad")
+    amountAlert.addTextField("Amount", "1429.45")
     amountAlert.addAction("Next")
     amountAlert.addCancelAction("Cancel")
 
@@ -35,7 +36,7 @@ async function handleIncome() {
     const amount = parseFloat(amountAlert.textFieldValue(0))
     if (isNaN(amount) || amount <= 0) {
         const err = new Alert()
-        err.title = "Importe no válido"
+        err.title = "Invalid amount"
         err.addAction("OK")
         await err.presentAlert()
         return
@@ -43,10 +44,10 @@ async function handleIncome() {
 
     // Step 2: date
     const dateAlert = new Alert()
-    dateAlert.title = "📅 Fecha del ingreso"
-    dateAlert.addAction("Hoy")
-    dateAlert.addAction("Otra fecha")
-    dateAlert.addCancelAction("Cancelar")
+    dateAlert.title = "📅 Income date"
+    dateAlert.addAction("Today")
+    dateAlert.addAction("Other date")
+    dateAlert.addCancelAction("Cancel")
 
     const dateChoice = await dateAlert.presentAlert()
     if (dateChoice === -1) return
@@ -56,11 +57,11 @@ async function handleIncome() {
         date = formatDate(new Date())
     } else {
         const customAlert = new Alert()
-        customAlert.title = "📅 Introduce la fecha"
-        customAlert.message = "Formato: YYYY-MM-DD"
-        customAlert.addTextField("Fecha", formatDate(new Date()))
-        customAlert.addAction("Confirmar")
-        customAlert.addCancelAction("Cancelar")
+        customAlert.title = "📅 Enter the date"
+        customAlert.message = "Format: YYYY-MM-DD"
+        customAlert.addTextField("Date", formatDate(new Date()))
+        customAlert.addAction("Confirm")
+        customAlert.addCancelAction("Cancel")
 
         const customChoice = await customAlert.presentAlert()
         if (customChoice === -1) return
@@ -70,10 +71,10 @@ async function handleIncome() {
 
     // Step 3: confirm
     const confirm = new Alert()
-    confirm.title = "¿Confirmar ingreso?"
-    confirm.message = `Importe: ${amount.toFixed(2)} €\nFecha: ${date}`
-    confirm.addAction("Guardar")
-    confirm.addCancelAction("Cancelar")
+    confirm.title = "Confirm income?"
+    confirm.message = `Amount: ${amount.toFixed(2)} €\nDate: ${date}`
+    confirm.addAction("Save")
+    confirm.addCancelAction("Cancel")
 
     const confirmed = await confirm.presentAlert()
     if (confirmed === -1) return
