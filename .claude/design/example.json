@@ -1,0 +1,41 @@
+{
+    "goal": {
+        "name": "Master profesional",
+        "target_amount": 20000.00,
+        "target_month": 1000.00,
+        "deadline": "2027-12"
+    },
+    "account_balance": {
+        "amount": 3500.00,
+        "date": "2026-03-01"
+    },
+    "cycles": [
+        {
+            "id": "2026-03",
+            "income": {
+                "amount": 1400.00,
+                "date": "2026-03-03"
+            },
+            "limits": {
+                "variable": 300.00,
+                "fuel": 80.00
+            },
+            "expenses": {
+                "fixed": [
+                    { "name": "Alquiler", "amount": 450.00, "date": "2026-03-03" },
+                    { "name": "Seguro coche", "amount": 55.00, "date": "2026-03-15" },
+                    { "name": "Gym", "amount": 30.00, "date": "2026-03-10" }
+                ],
+                "variable": [
+                    { "name": "Supermercado", "amount": 45.30, "date": "2026-03-05" },
+                    { "name": "Farmacia", "amount": 12.00, "date": "2026-03-11" },
+                    { "name": "Ropa", "amount": 38.90, "date": "2026-03-18" }
+                ],
+                "fuel": [
+                    { "amount": 40.00, "date": "2026-03-08" },
+                    { "amount": 38.50, "date": "2026-03-21" }
+                ]
+            }
+        }
+    ]
+}
